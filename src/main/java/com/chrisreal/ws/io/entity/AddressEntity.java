@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity(name = "addresses")
+@Entity(name="addresses")
 public class AddressEntity implements Serializable {
 
 	private static final long serialVersionUID = -4445361441276500881L;

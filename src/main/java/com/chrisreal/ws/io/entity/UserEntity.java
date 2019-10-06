@@ -40,7 +40,7 @@ public class UserEntity implements Serializable {
 	private Boolean emailVerificationStatus = false;
 	
 	@OneToMany(mappedBy="userDetails", cascade=CascadeType.ALL)
-	private List<AddressEntity> address;
+	private List<AddressEntity> addresses;
 
 	public long getId() {
 		return id;
@@ -106,13 +106,15 @@ public class UserEntity implements Serializable {
 		this.emailVerificationStatus = emailVerificationStatus;
 	}
 
-	public List<AddressEntity> getAddress() {
-		return address;
+	public List<AddressEntity> getAddresses() {
+		return addresses;
 	}
 
-	public void setAddress(List<AddressEntity> address) {
-		this.address = address;
+	public void setAddresses(List<AddressEntity> addresses) {
+		this.addresses = addresses;
 	}
+
+
 	
 	
 }
