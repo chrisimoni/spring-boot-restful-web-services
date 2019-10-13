@@ -74,7 +74,10 @@ public class UserServiceImpl implements UserService {
 		if(userEntity == null) throw new UsernameNotFoundException(email);
 		
 		//User object is inbuilt with Spring to load user details
-		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
+		//return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
+		
+		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), userEntity.getEmailVerificationStatus(),
+				true, true, true, new ArrayList<>());
 	}
 
 	@Override
