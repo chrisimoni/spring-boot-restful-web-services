@@ -10,4 +10,5 @@ import com.chrisreal.ws.io.entity.UserEntity;
 public interface UserRepository extends PagingAndSortingRepository<UserEntity, Long> { //CrudRepository is changed to PagingAndSortingRepository to handle pagination
 	UserEntity findByEmail(String email);
 	UserEntity findByUserId(String userId);
+	UserEntity findUserByEmailVerificationToken(String token);
 }
