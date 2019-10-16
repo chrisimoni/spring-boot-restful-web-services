@@ -186,7 +186,7 @@ public class UserController {
 	/**
 	 * http://localhost:8080/mobile-aws-ws/users/email-verification?token=sdfddffg
 	 */
-	@GetMapping(path = "/email-verification", produces = { MediaType.APPLICATION_XML_VALUE,
+	@GetMapping(path = "/email-verification", produces = {
 			MediaType.APPLICATION_JSON_VALUE})
 	public OperationStatusModel verifyEmailToken(@RequestParam(value="token") String token) {
 		OperationStatusModel returnValue = new OperationStatusModel();
@@ -195,9 +195,9 @@ public class UserController {
 		boolean isVerified = userService.verifyEmailToken(token);
 		
 		if(isVerified) {
-			returnValue.setOperationName(RequestOperationStatus.SUCCESS.name());
+			returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
 		}else {
-			returnValue.setOperationName(RequestOperationStatus.ERROR.name());
+			returnValue.setOperationResult(RequestOperationStatus.ERROR.name());
 		}
 		
 		return returnValue;
