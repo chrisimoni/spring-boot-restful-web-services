@@ -1,5 +1,7 @@
 package com.chrisreal.ws.shared;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
@@ -33,7 +35,8 @@ public class AmazonSES {
 			+ "Thank you!";
 	
 	public void verifyEmail(UserDto userDto) {
-		AmazonSimpleEmailService client = AmazonSimpleEmailServiceClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
+		BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAST27BXA5UOKMIXXK", "YZGjdqFxVXizVYPg0dUoTvqFpu2imkBqb07tLgmY");
+		AmazonSimpleEmailService client = AmazonSimpleEmailServiceClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCreds)).withRegion(Regions.US_EAST_1).build();
 		
 		String htmlBodyWithToken = HTMLBODY.replace("$tokenValue", userDto.getEmailVerificationToken());
 		String textBodyWithToken = TEXTBODY.replace("$tokenValue", userDto.getEmailVerificationToken());

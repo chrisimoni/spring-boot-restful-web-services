@@ -21,6 +21,7 @@ import com.chrisreal.ws.io.repositories.UserRepository;
 import com.chrisreal.ws.model.response.ErrorMessages;
 import com.chrisreal.ws.model.response.UserRest;
 import com.chrisreal.ws.service.UserService;
+import com.chrisreal.ws.shared.AmazonSES;
 import com.chrisreal.ws.shared.Utils;
 import com.chrisreal.ws.shared.dto.AddressDto;
 import com.chrisreal.ws.shared.dto.UserDto;
@@ -63,6 +64,9 @@ public class UserServiceImpl implements UserService {
 		
 		//BeanUtils.copyProperties(StoredUserDetails, returnValue);
 		UserDto returnValue = modelMapper.map(StoredUserDetails, UserDto.class);
+		
+		//Send emaill message to users to verify their email address
+		new AmazonSES().verifyEmail(returnValue);
 		
 		return returnValue;
 	}
