@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chrisreal.ws.exceptions.UserServiceException;
+import com.chrisreal.ws.model.request.PasswordRequestResetModel;
 import com.chrisreal.ws.model.request.UserDetailsRequestModel;
 import com.chrisreal.ws.model.response.AddressesRest;
 import com.chrisreal.ws.model.response.ErrorMessages;
@@ -202,4 +203,28 @@ public class UserController {
 		
 		return returnValue;
 	}
+	
+	
+	/**
+	 * http://localhost:8080/mobile-aws-ws/users/password-reset-request
+	 */
+	@PostMapping(path = "/password-reset-request", 
+			consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, 
+			produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }
+	)
+	public OperationStatusModel requestReset(@RequestBody PasswordRequestResetModel passwordRequestResetModel) {
+		OperationStatusModel returnValue = new OperationStatusModel();
+		
+		boolean operationResult = userService.requestPasswordReset(passwordRequestResetModel.getEmail());
+		
+		returnValue.setOperationName(RequestOperationName.REQUEST_PASSWORD_RESET.name());
+		returnValue.setOperationResult(RequestOperationStatus.ERROR.name());
+		
+		if(operationResult) {
+			returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+		}
+		
+		return returnValue;
+	}
+	
 }
