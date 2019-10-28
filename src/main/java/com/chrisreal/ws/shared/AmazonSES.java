@@ -35,7 +35,7 @@ public class AmazonSES {
 			+ "Thank you!";
 	
 	public void verifyEmail(UserDto userDto) {
-		BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAST27BXA5UOKMIXXK", "YZGjdqFxVXizVYPg0dUoTvqFpu2imkBqb07tLgmY");
+		BasicAWSCredentials awsCreds = new BasicAWSCredentials("enter-your-id", "enter-your-secret");
 		AmazonSimpleEmailService client = AmazonSimpleEmailServiceClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCreds)).withRegion(Regions.US_EAST_1).build();
 		
 		String htmlBodyWithToken = HTMLBODY.replace("$tokenValue", userDto.getEmailVerificationToken());
