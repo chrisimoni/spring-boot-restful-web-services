@@ -23,7 +23,7 @@ public class AmazonSES {
 	final String HTMLBODY = "<h1>Please verify your email address</h1>"
 			+ "<p>Thank you for registering with our app. To complete your registraton process and be able to log in, "
 			+ " click on the following link:"
-			+ "<a href='http://localhost:8080/verification-service/email-verification.html?token=$tokenValue'>"
+			+ "<a href='http://ec2-34-203-247-65.compute-1.amazonaws.com:8080/verification-service/email-verification.html?token=$tokenValue'>"
 			+ "Final step to complete your registration</a><br/><br/>"
 			+ "Thank you!</p>";
 	
@@ -31,7 +31,7 @@ public class AmazonSES {
 	final String TEXTBODY = "Please verify your email address."
 			+ "Thank you for registering with our app. To complete your registraton process and be able to log in, "
 			+ " Open the following URL in your browser:"
-			+ "http://localhost:8080/verification-service/email-verification.html?token=$tokenValue"
+			+ "http://ec2-34-203-247-65.compute-1.amazonaws.com:8080/verification-service/email-verification.html?token=$tokenValue"
 			+ "Thank you!";
 	
 	public void verifyEmail(UserDto userDto) {
