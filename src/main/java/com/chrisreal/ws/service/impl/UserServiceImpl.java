@@ -16,7 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.chrisreal.ws.exceptions.UserServiceException;
+import com.chrisreal.ws.io.entity.PasswordResetTokenEntity;
 import com.chrisreal.ws.io.entity.UserEntity;
+import com.chrisreal.ws.io.repositories.PasswordResetRepository;
 import com.chrisreal.ws.io.repositories.UserRepository;
 import com.chrisreal.ws.model.response.ErrorMessages;
 import com.chrisreal.ws.model.response.UserRest;
@@ -36,6 +38,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	PasswordResetRepository passwordResetRepository;
 	
 	@Override
 	public UserDto createUser(UserDto user) {
@@ -190,7 +195,7 @@ public class UserServiceImpl implements UserService {
 		PasswordResetTokenEntity passwordResetTokenEntity = new PasswordResetTokenEntity();
 		passwordResetTokenEntity.setToken(token);
 		passwordResetTokenEntity.setUserDetails(userEntity);
-		PasswordResetRepository.save(passwordResetTokenEntity);
+		passwordResetRepository.save(passwordResetTokenEntity);
 		
 		returnValue = new AmazonSES().sendPasswordResetRequest(
 				userEntity.getFirstName(),
