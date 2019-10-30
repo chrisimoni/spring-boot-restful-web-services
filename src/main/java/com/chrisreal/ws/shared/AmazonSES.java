@@ -53,7 +53,7 @@ public class AmazonSES {
 			+ "Thank you!";
 	
 	public void verifyEmail(UserDto userDto) {
-		BasicAWSCredentials awsCreds = new BasicAWSCredentials("enter your id", "enter your secret key");
+		BasicAWSCredentials awsCreds = new BasicAWSCredentials("enter your acces key id", "enter secret access key");
 		AmazonSimpleEmailService client = AmazonSimpleEmailServiceClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCreds)).withRegion(Regions.US_EAST_1).build();
 		
 		String htmlBodyWithToken = HTMLBODY.replace("$tokenValue", userDto.getEmailVerificationToken());
@@ -76,7 +76,7 @@ public class AmazonSES {
 	public boolean sendPasswordResetRequest(String firstName, String email, String token) {
 		boolean returnValue = false;
 		
-		BasicAWSCredentials awsCreds = new BasicAWSCredentials("enter your id", "enter your secret key");
+		BasicAWSCredentials awsCreds = new BasicAWSCredentials("enter your acces key id", "enter secret access key");
 		AmazonSimpleEmailService client = AmazonSimpleEmailServiceClientBuilder
 				.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(awsCreds))
