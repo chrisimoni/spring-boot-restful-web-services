@@ -41,7 +41,7 @@ public class AmazonSES {
 			+ "<p>Hi, $firstName!</p> "
 			+ "<p>Someone has requested to reset your password. If you are not the one please ignore. "
 			+ " Otherwise please click on the following link to set a new password:"
-			+ "<a href='http://localhost.com:8080/verification-service/password-reset.html?token=$tokenValue'>"
+			+ "<a href='http://ec2-34-203-247-65.compute-1.amazonaws.com:8080/verification-service/password-reset.html?token=$tokenValue'>"
 			+ "Click this link to reset your password</a><br/><br/>"
 			+ "Thank you!</p>";
 	
@@ -49,11 +49,11 @@ public class AmazonSES {
 			+ "Hi, $firstName! "
 			+ "Someone has requested to reset your password. If you are not the one please ignore. "
 			+ " Otherwise please open the following link to set a new password: "
-			+ "http://localhost.com:8080/verification-service/password-reset.html?token=$tokenValue "
+			+ "http://ec2-34-203-247-65.compute-1.amazonaws.com:8080/verification-service/password-reset.html?token=$tokenValue "
 			+ "Thank you!";
 	
 	public void verifyEmail(UserDto userDto) {
-		BasicAWSCredentials awsCreds = new BasicAWSCredentials("enter-your-id", "enter-your-secret");
+		BasicAWSCredentials awsCreds = new BasicAWSCredentials("enter your id", "enter your secret key");
 		AmazonSimpleEmailService client = AmazonSimpleEmailServiceClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCreds)).withRegion(Regions.US_EAST_1).build();
 		
 		String htmlBodyWithToken = HTMLBODY.replace("$tokenValue", userDto.getEmailVerificationToken());
@@ -76,7 +76,7 @@ public class AmazonSES {
 	public boolean sendPasswordResetRequest(String firstName, String email, String token) {
 		boolean returnValue = false;
 		
-		BasicAWSCredentials awsCreds = new BasicAWSCredentials("enter-your-id", "enter-your-secret");
+		BasicAWSCredentials awsCreds = new BasicAWSCredentials("enter your id", "enter your secret key");
 		AmazonSimpleEmailService client = AmazonSimpleEmailServiceClientBuilder
 				.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(awsCreds))

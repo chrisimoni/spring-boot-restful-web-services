@@ -36,7 +36,7 @@ public class Utils {
 		return new String(returnValue);
 	}
 
-	public boolean hasTokenExpired(String token) {
+	public static boolean hasTokenExpired(String token) {
 		Claims claims = Jwts.parser()
 				.setSigningKey(SecurityConstants.getTokenSecret())
 				.parseClaimsJws(token).getBody();

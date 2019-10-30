@@ -19,6 +19,7 @@ import com.chrisreal.ws.exceptions.UserServiceException;
 import com.chrisreal.ws.io.entity.PasswordResetTokenEntity;
 import com.chrisreal.ws.io.entity.UserEntity;
 import com.chrisreal.ws.io.repositories.PasswordResetRepository;
+import com.chrisreal.ws.io.repositories.PasswordResetTokenRepository;
 import com.chrisreal.ws.io.repositories.UserRepository;
 import com.chrisreal.ws.model.response.ErrorMessages;
 import com.chrisreal.ws.model.response.UserRest;
@@ -41,6 +42,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	PasswordResetRepository passwordResetRepository;
+	
+	@Autowired
+	PasswordResetTokenRepository passwordResetTokenRepository;
 	
 	@Override
 	public UserDto createUser(UserDto user) {
@@ -203,6 +207,39 @@ public class UserServiceImpl implements UserService {
 				token
 				);
 		
+		
+		return returnValue;
+	}
+
+	@Override
+	public boolean resetPassword(String token, String password) {
+		boolean returnValue = false;
+		
+		if(Utils.hasTokenExpired(token)) {
+			return returnValue;
+		}
+		
+		PasswordResetTokenEntity passwordResetTokenEntity = passwordResetTokenRepository.findByToken(token);
+		
+		if(passwordResetTokenEntity == null) {
+			return returnValue;
+		}
+		
+		//prepare new password
+		String encodedPassword = bCryptPasswordEncoder.encode(password);
+		
+		//Update user password in database
+		UserEntity userEntity = passwordResetTokenEntity.getUserDetails();
+		userEntity.setEncryptedPassword(encodedPassword);
+		UserEntity savedUserEntity = userRepository.save(userEntity);
+		
+		//verify if password was saved successfully
+		if(savedUserEntity != null && savedUserEntity.getEncryptedPassword().equalsIgnoreCase(encodedPassword)) {
+			returnValue = true;
+		}
+		
+		//remove password reset token from the database
+		passwordResetTokenRepository.delete(passwordResetTokenEntity);
 		
 		return returnValue;
 	}
